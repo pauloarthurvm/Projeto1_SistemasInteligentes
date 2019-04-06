@@ -14,61 +14,72 @@ import java.util.ArrayList;
  */
 public class EnvironmentFromTextNode {
 
-    String txtLine;
-    int lines, columns;
-    Node[][] matriceNode;
+    boolean[][] matrixBoolean;
+    public static ArrayList<Node> nodeList;
 
     public EnvironmentFromTextNode() throws FileNotFoundException, IOException {
-        
-        //Open text file
+        //String txtLine;
+	int lines, columns;
+	
+        //Abre arquivo de texto
         File file = new File("Env.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
 
-        //Read file's first line - lines
+        //Lê primeira linha do arquivo - numero de linhas
         lines = Integer.parseInt(br.readLine());
         System.out.println("Lines: " + lines);
 
-        //Read file's second line - columns
+        //Lê segunda linha do arquivo - numero de colunas
         columns = Integer.parseInt(br.readLine());
         System.out.println("Columns: " + columns);
-
-        //Create the matrice of nodes
-        matriceNode = new Node[lines][columns];
-
-        //Read rest of lines of the file
+	
+	//Cria matriz booleana para identificar espaço livre e List de Nodes
+	matrixBoolean = new boolean[lines][columns];
+	nodeList = new ArrayList<>();
+	
+        //Percorre linhas do arquivo de texto
         String lineFromTxt;
         for (int i = 0; i < 10; i++) {
-            lineFromTxt = br.readLine();
+            lineFromTxt = br.readLine();    //Lê uma linha inteira
             System.out.println(lineFromTxt);
 
-            //Create each node of the matrice, reading each char of the line
+            //Cria cada Node da matriz, lendo cada Char do arquivo
             for (int j = 0; j < 10; j++) {
                 System.out.print(String.valueOf(lineFromTxt.charAt(j)));
-                //matriceNode[i][j] = new Node(String.valueOf(lineFromTxt.charAt(j)));
-                if(String.valueOf(lineFromTxt.charAt(j)).equals(".")){
+                if(!String.valueOf(lineFromTxt.charAt(j)).equals("*")){	//Caso a posição não seja uma parede
 		    for(int k = 0; k < 8; k++){
-			matriceNode[i][j] = new Node(i, j, k);
+			matrixBoolean[i][j] = true;
+			nodeList.add(new Node(i, j, k));
 		    }
 		} 
-		else{
-		    matriceNode[i][j] = null;
+		else{	//Caso a posição seja uma parede
+		    matrixBoolean[i][j] = false;
 		}
             }
             System.out.println();
         }
         
-        br.close();
+        br.close(); //Fecha arquivo de texto
     }
- 
+    
+    
+    
+    
     public void printEnvironment(){
-        for(int i = 0; i < matriceNode.length; i++){
-            for(int j = 0; j < matriceNode[i].length; j++){
-		if(matriceNode[i][j] != null){
-		    for(int k = 0; k < 8; k++){
-			if(matriceNode[i][j] != null)
-			System.out.print(matriceNode[i][j].posX + " " + matriceNode[i][j].posY + "   dir: " + matriceNode[i][j].dir + " ");
+	int count = 0;  //Contador para percorrer lista de Node
+	
+        for(int i = 0; i < matrixBoolean.length; i++){	//Percorre linhas da matriz
+            for(int j = 0; j < matrixBoolean[i].length; j++){	//Percorre colunas
+		System.out.println("Line = " + (i+1) + "    Column = " + (j + 1));
+		if(matrixBoolean[i][j] != false){	//Caso a posição não seja uma parede
+		    for(int k = 0; k < 8; k++){	    //Imprime todos os Nodes daquela posição
+			Node auxNode = nodeList.get(count);
+			System.out.print("X: " + (auxNode.posX + 1) + " " + "Y: " + (auxNode.posY + 1) + " Dir: " + auxNode.dir + " ---- ");
+			count++;
 		    }
 		    System.out.println("");
+		} else{
+		    System.out.println("PAREDE");
 		}
             }
             System.out.println();
