@@ -6,6 +6,7 @@
 package javaapplication1;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -14,31 +15,29 @@ import java.util.Scanner;
  */
 public class JavaApplication1 {
 
-    /**
-     * @param args the command line arguments
-     */
-    
-    static Scanner input;
-    private static Environment environment;
-    private static EnvironmentFromTextNode environmentFromText;
-    
-    public static void main(String[] args) throws IOException {
+	/**
+	 * @param args the command line arguments
+	 */
+	static Scanner input;
+	private static EnvironmentFromTextNode environmentFromText;
+	private static Graph graph;
+
+	public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        
-        //Create the environment from the text file
-        environmentFromText = new EnvironmentFromTextNode();
-        
-        //Show the map from environment
-        environmentFromText.printEnvironment();
-        
-        
-        
-        
-        
-        
-        
-        
-        System.out.println("");
-    }
-    
+
+		//Create the environment from the text file
+		environmentFromText = new EnvironmentFromTextNode();
+
+		//Show the map from environment
+		//environmentFromText.printEnvironment();
+		//environmentFromText.printNodeList();
+
+
+        //Cria grafo com o ArrayList de Nodes e a matriz booleana, inserindo os ponteiros de cada Node --- frente, horário e anti-horário
+		graph = new Graph(environmentFromText.matrixBoolean, environmentFromText.nodeList);
+		System.out.println("");
+		
+		environmentFromText.printNodeList();
+	}
+
 }
