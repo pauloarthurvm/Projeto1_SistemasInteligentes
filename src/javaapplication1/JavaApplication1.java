@@ -19,7 +19,7 @@ public class JavaApplication1 {
 	 * @param args the command line arguments
 	 */
 	static Scanner input;
-	private static EnvironmentFromTextNode environmentFromText;
+	public static EnvironmentFromTextNode environmentFromText;
 	private static Graph graph;
 
 	public static void main(String[] args) throws IOException {
@@ -36,6 +36,10 @@ public class JavaApplication1 {
         //Cria grafo com o ArrayList de Nodes e a matriz booleana, inserindo os ponteiros de cada Node --- frente, horário e anti-horário
 		graph = new Graph(environmentFromText.matrixBoolean, environmentFromText.nodeList);
 		System.out.println("");
+		
+		AStar newSearchAStar = new AStar(1, 2, 2, 9, 9, environmentFromText.nodeList);
+		newSearchAStar.calculateMovementCostForEachNode();
+		newSearchAStar.findBestWay();
 		
 		environmentFromText.printNodeList();
 	}

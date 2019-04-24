@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class EnvironmentFromTextNode {
 
-	boolean[][] matrixBoolean;
+	public boolean[][] matrixBoolean;
 	public ArrayList<Node> nodeList;
 
 	public EnvironmentFromTextNode() throws FileNotFoundException, IOException {
